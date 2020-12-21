@@ -133,22 +133,22 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
   ## Define a function that subsets loop data for hic region
   subset_loops <- function(loops, object){
 
-    numberChrom <- as.numeric(gsub("chr", "", object$chrom))
-    numberAltChrom <- as.numeric(gsub("chr", "", object$altchrom))
+    object$chrom <- as.numeric(gsub("chr", "", object$chrom))
+    object$altchrom <- as.numeric(gsub("chr", "", object$altchrom))
 
-    if (numberChrom == numberAltChrom){
+    if (object$chrom == object$altchrom){
 
       loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
     } else {
 
-      if (numberChrom > numberAltChrom){
+      if (object$chrom > object$altchrom){
 
         loops_subset <- loops[which(loops[,1] == object$altchrom & loops[,4] == object$chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
                                     & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
-      } else if (numberChrom < numberAltChrom){
+      } else if (object$chrom < object$altchrom){
 
         loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                     & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
